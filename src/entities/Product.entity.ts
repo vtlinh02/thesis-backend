@@ -5,7 +5,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { CustomerProduct } from './CustomerProduct.entity';
+import { Order } from './Order.entity';
 import { Shop } from './Shop.entity';
 
 @Entity()
@@ -22,11 +22,8 @@ export class Product {
   @Column()
   totalRemaining: number;
 
-  @OneToMany(
-    () => CustomerProduct,
-    (customerProduct) => customerProduct.product,
-  )
-  customerProducts: CustomerProduct[];
+  @OneToMany(() => Order, (order) => order.product)
+  orders: Order[];
 
   @ManyToOne(() => Shop, (shop) => shop.products)
   shop: Shop;

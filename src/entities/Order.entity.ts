@@ -9,14 +9,14 @@ import { Custormer } from './Customer.entity';
 import { Product } from './Product.entity';
 
 @Entity()
-export class CustomerProduct {
+export class Order {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Product, (product) => product.customerProducts)
+  @ManyToOne(() => Product, (product) => product.orders)
   product: Product;
 
-  @ManyToOne(() => Custormer, (customer) => customer.customerProducts)
+  @ManyToOne(() => Custormer, (customer) => customer.orders)
   customer: Custormer;
 
   @Column({
