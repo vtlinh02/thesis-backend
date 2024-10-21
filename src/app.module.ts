@@ -5,6 +5,7 @@ import { Shop } from './entities/Shop.entity';
 import { Custormer } from './entities/Customer.entity';
 import { Product } from './entities/Product.entity';
 import { CustomerProduct } from './entities/CustomerProduct.entity';
+import { ShopModule } from './modules/shop/shop.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { CustomerProduct } from './entities/CustomerProduct.entity';
       entities: [Shop, Custormer, Product, CustomerProduct],
       synchronize: true,
     }),
+    ShopModule,
   ],
 })
 export class AppModule {}
