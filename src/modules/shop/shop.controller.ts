@@ -8,7 +8,7 @@ import { CreateShopDto } from './dto/createShop.dto';
 export class ShopController {
   constructor(private readonly shopService: ShopService) {}
 
-  @Post('create')
+  @Post('/create')
   async createPost(@Body() data: CreateShopDto) {
     return this.shopService.createShop(data);
   }
