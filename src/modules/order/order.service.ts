@@ -27,7 +27,7 @@ export class OrderService {
     });
 
     if (product.totalRemaining == 0) {
-      return { message: 'Sold out' };
+      return { message: 'Fail' };
     }
 
     product.totalRemaining = product.totalRemaining - 1;
@@ -40,7 +40,10 @@ export class OrderService {
     data.note ? (order.note = data.note) : null;
 
     const dataReturn = await this.orderRepository.save(order);
-    return { data: dataReturn };
+    return {
+      message: 'Success',
+      data: dataReturn,
+    };
   }
 
   async getListOrdersByCustomerId(customerId: number) {
