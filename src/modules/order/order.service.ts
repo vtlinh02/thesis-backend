@@ -26,6 +26,14 @@ export class OrderService {
       id: data.productId,
     });
 
+    if (product.totalRemaining == 0) {
+      return { message: 'Sold out' };
+    }
+
+    product.totalRemaining = product.totalRemaining - 1;
+
+    await this.productRepository.save(product);
+
     const order = new Order();
     order.customer = customer;
     order.product = product;
@@ -33,5 +41,15 @@ export class OrderService {
 
     const dataReturn = await this.orderRepository.save(order);
     return { data: dataReturn };
+  }
+
+  async getListOrdersByCustomerId(customerId: number) {
+    const customer = await this.customerRepository.findOneBy({
+      id: customerId,
+    });
+
+    const orders = await this.orderRepository.findBy({ customer });
+
+    return { data: orders };
   }
 }
