@@ -13,6 +13,8 @@ export class CustomerService {
 
   async createCustomer(data: CreateCustomerDto) {
     const customer = new Custormer();
+
+    customer.id = data.id;
     customer.name = data.name;
 
     const dataReturn = await this.customerRepository.save(customer);
