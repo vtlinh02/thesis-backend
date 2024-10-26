@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Order } from 'src/entities/Order.entity';
 import { Product } from 'src/entities/Product.entity';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { CreateOrderDto } from './dto/createOrder.dto';
 import { Custormer } from 'src/entities/Customer.entity';
 
@@ -15,6 +15,7 @@ export class OrderService {
     private readonly productRepository: Repository<Product>,
     @InjectRepository(Custormer)
     private readonly customerRepository: Repository<Custormer>,
+    private readonly dataSource: DataSource,
   ) {}
 
   async createOrder(data: CreateOrderDto) {
@@ -22,17 +23,37 @@ export class OrderService {
       id: data.customerId,
     });
 
-    const product = await this.productRepository.findOneBy({
-      id: data.productId,
-    });
+    const queryRunner = this.dataSource.createQueryRunner();
 
-    if (product.totalRemaining == 0) {
-      return { message: 'Fail' };
+    let product: Product = null;
+
+    let isTransactionSuccess = false;
+
+    queryRunner.startTransaction();
+    try {
+      product = await this.productRepository.findOneBy({
+        id: data.productId,
+      });
+
+      if (product.totalRemaining == 0) {
+        return { message: 'Fail' };
+      }
+
+      product.totalRemaining = product.totalRemaining - 1;
+
+      await this.productRepository.save(product);
+
+      await queryRunner.commitTransaction();
+      isTransactionSuccess = true;
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+    } finally {
+      await queryRunner.release();
     }
 
-    product.totalRemaining = product.totalRemaining - 1;
-
-    await this.productRepository.save(product);
+    if (!isTransactionSuccess) {
+      return { message: 'Transaction Fail' };
+    }
 
     const order = new Order();
     order.customer = customer;
