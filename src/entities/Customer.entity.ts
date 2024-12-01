@@ -1,6 +1,7 @@
-import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
+import { Column, Entity, OneToMany, OneToOne, PrimaryColumn } from 'typeorm';
 import { Order } from './Order.entity';
 import { Cart } from './Cart.entity';
+import { Wallet } from './Wallet.entity';
 
 @Entity()
 export class Customer {
@@ -15,4 +16,7 @@ export class Customer {
 
   @OneToMany(() => Cart, (cart) => cart.customer)
   carts: Cart[];
+
+  @OneToOne(() => Wallet, (wallet) => wallet.customer)
+  wallet: Wallet;
 }

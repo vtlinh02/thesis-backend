@@ -23,6 +23,9 @@ export class Product {
   @Column()
   totalRemaining: number;
 
+  @Column()
+  price: number;
+
   @OneToMany(() => Order, (order) => order.product)
   orders: Order[];
 

@@ -10,6 +10,8 @@ import { CustomerModule } from './modules/customer/customer.module';
 import { OrderModule } from './modules/order/order.module';
 import { Cart } from './entities/Cart.entity';
 import { CartModule } from './modules/cart/cart.module';
+import { Wallet } from './entities/Wallet.entity';
+import { WalletModule } from './modules/wallet/wallet.module';
 
 @Module({
   imports: [
@@ -20,7 +22,7 @@ import { CartModule } from './modules/cart/cart.module';
       username: 'root',
       password: 'vutuanlinh2002',
       database: 'thesis',
-      entities: [Shop, Customer, Product, Order, Cart],
+      entities: [Shop, Customer, Product, Order, Cart, Wallet],
       synchronize: true,
     }),
     ShopModule,
@@ -28,6 +30,7 @@ import { CartModule } from './modules/cart/cart.module';
     CustomerModule,
     OrderModule,
     CartModule,
+    WalletModule,
   ],
 })
 export class AppModule {}
