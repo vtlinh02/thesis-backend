@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { Order } from './Order.entity';
 import { Shop } from './Shop.entity';
+import { Cart } from './Cart.entity';
 
 @Entity()
 export class Product {
@@ -27,4 +28,7 @@ export class Product {
 
   @ManyToOne(() => Shop, (shop) => shop.products)
   shop: Shop;
+
+  @OneToMany(() => Cart, (cart) => cart.product)
+  carts: Cart[];
 }

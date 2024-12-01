@@ -1,18 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Custormer } from 'src/entities/Customer.entity';
+import { Customer } from 'src/entities/Customer.entity';
 import { Repository } from 'typeorm';
 import { CreateCustomerDto } from './dto/createCustomer.dto';
 
 @Injectable()
 export class CustomerService {
   constructor(
-    @InjectRepository(Custormer)
-    private readonly customerRepository: Repository<Custormer>,
+    @InjectRepository(Customer)
+    private readonly customerRepository: Repository<Customer>,
   ) {}
 
   async createCustomer(data: CreateCustomerDto) {
-    const customer = new Custormer();
+    const customer = new Customer();
 
     customer.id = data.id;
     customer.name = data.name;

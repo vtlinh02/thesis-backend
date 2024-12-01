@@ -4,7 +4,7 @@ import { Order } from 'src/entities/Order.entity';
 import { Product } from 'src/entities/Product.entity';
 import { DataSource, Repository } from 'typeorm';
 import { CreateOrderDto } from './dto/createOrder.dto';
-import { Custormer } from 'src/entities/Customer.entity';
+import { Customer } from 'src/entities/Customer.entity';
 
 @Injectable()
 export class OrderService {
@@ -13,8 +13,8 @@ export class OrderService {
     private readonly orderRepository: Repository<Order>,
     @InjectRepository(Product)
     private readonly productRepository: Repository<Product>,
-    @InjectRepository(Custormer)
-    private readonly customerRepository: Repository<Custormer>,
+    @InjectRepository(Customer)
+    private readonly customerRepository: Repository<Customer>,
     private readonly dataSource: DataSource,
   ) {}
 

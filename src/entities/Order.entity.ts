@@ -5,7 +5,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Custormer } from './Customer.entity';
+import { Customer } from './Customer.entity';
 import { Product } from './Product.entity';
 
 @Entity()
@@ -16,8 +16,8 @@ export class Order {
   @ManyToOne(() => Product, (product) => product.orders)
   product: Product;
 
-  @ManyToOne(() => Custormer, (customer) => customer.orders)
-  customer: Custormer;
+  @ManyToOne(() => Customer, (customer) => customer.orders)
+  customer: Customer;
 
   @Column({
     nullable: true,

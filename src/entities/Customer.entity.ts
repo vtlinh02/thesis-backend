@@ -1,8 +1,9 @@
 import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import { Order } from './Order.entity';
+import { Cart } from './Cart.entity';
 
 @Entity()
-export class Custormer {
+export class Customer {
   @PrimaryColumn()
   id: number;
 
@@ -11,4 +12,7 @@ export class Custormer {
 
   @OneToMany(() => Order, (order) => order.customer)
   orders: Order[];
+
+  @OneToMany(() => Cart, (cart) => cart.customer)
+  carts: Cart[];
 }
