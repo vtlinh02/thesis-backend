@@ -81,4 +81,31 @@ export class CartService {
       data: dataReturn,
     };
   }
+
+  async checkIfCartAlreadyExist(data: AddToCartDto) {
+    const customer = await this.customerRepository.findOneBy({
+      id: data.customerId,
+    });
+
+    if (!customer) {
+      throw new HttpException('Customer not found', HttpStatus.BAD_REQUEST);
+    }
+
+    const product = await this.productRepository.findOneBy({
+      id: data.productId,
+    });
+    if (!product) {
+      throw new HttpException('Product not found', HttpStatus.BAD_REQUEST);
+    }
+
+    const cart = await this.cartRepository.findOneBy({
+      customer,
+      product,
+      isCancelled: false,
+    });
+
+    return {
+      data: cart ? true : false,
+    };
+  }
 }

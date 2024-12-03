@@ -9,9 +9,9 @@ import { CancelCartDto } from './dto/cancelCart.dto';
 export class CartController {
   constructor(private readonly cartService: CartService) {}
 
-  @Post('/')
-  async addCart(@Body() data: AddToCartDto) {
-    return this.cartService.addCart(data);
+  @Post('/check-cart-exist')
+  async checkCartExist(@Body() data: AddToCartDto) {
+    return this.cartService.checkIfCartAlreadyExist(data);
   }
 
   @Get('/list-carts/:customerId')
@@ -22,5 +22,10 @@ export class CartController {
   @Put('/cancel-cart/')
   async cancelCart(@Body() data: CancelCartDto) {
     return this.cartService.cancelCart(data);
+  }
+
+  @Post('/')
+  async addCart(@Body() data: AddToCartDto) {
+    return this.cartService.addCart(data);
   }
 }

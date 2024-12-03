@@ -11,5 +11,8 @@ export class CreateProductDto {
   description: string;
 
   @ApiProperty()
+  price: number;
+
+  @ApiProperty()
   totalRemaining: number;
 }

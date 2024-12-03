@@ -21,6 +21,7 @@ export class ProductService {
     product.shop = shop;
     product.name = data.name;
     product.description = data.description;
+    product.price = data.price;
     product.totalRemaining = data.totalRemaining;
 
     const dataReturn = await this.productRepository.save(product);
