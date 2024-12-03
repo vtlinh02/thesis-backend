@@ -16,8 +16,8 @@ export class WalletController {
   }
 
   @Get('/:customerId')
-  async getWalletByCustomerId(@Param('customerId') customerId: string) {
-    return this.walletService.getWalletByCustomerId(Number(customerId));
+  async getWalletBalance(@Param('customerId') customerId: string) {
+    return this.walletService.getWalletBalance(Number(customerId));
   }
 
   @Put('/deposit')

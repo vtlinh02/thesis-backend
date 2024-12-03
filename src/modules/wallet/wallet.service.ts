@@ -34,7 +34,7 @@ export class WalletService {
     return { data: dataReturn };
   }
 
-  async getWalletByCustomerId(customerId: number) {
+  async getWalletBalance(customerId: number) {
     const customer = await this.customerRepository.findOneBy({
       id: customerId,
     });
@@ -45,7 +45,7 @@ export class WalletService {
       throw new HttpException('Wallet not found', HttpStatus.BAD_REQUEST);
     }
 
-    return { data: wallet };
+    return { data: wallet.balance };
   }
 
   async depositWallet(data: DepositWalletDto) {

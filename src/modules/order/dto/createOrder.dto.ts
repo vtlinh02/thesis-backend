@@ -7,8 +7,6 @@ export class CreateOrderDto {
   @ApiProperty()
   productId: number;
 
-  @ApiProperty({
-    required: false,
-  })
-  note?: string;
+  @ApiProperty()
+  quantity: number;
 }
