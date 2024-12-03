@@ -84,11 +84,11 @@ export class OrderService {
     }
 
     if (!isTransactionSuccess) {
-      return { message: 'Transaction Fail' };
+      return { message: 'Fail' };
     }
 
     return {
-      message: 'Transaction Success',
+      message: 'Success',
     };
   }
 
