@@ -12,6 +12,7 @@ import { Cart } from './entities/Cart.entity';
 import { CartModule } from './modules/cart/cart.module';
 import { Wallet } from './entities/Wallet.entity';
 import { WalletModule } from './modules/wallet/wallet.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { WalletModule } from './modules/wallet/wallet.module';
       entities: [Shop, Customer, Product, Order, Cart, Wallet],
       synchronize: true,
     }),
+    AuthModule,
     ShopModule,
     ProductModule,
     CustomerModule,

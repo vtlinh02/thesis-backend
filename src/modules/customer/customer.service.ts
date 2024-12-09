@@ -15,7 +15,6 @@ export class CustomerService {
     const customer = new Customer();
 
     customer.id = data.id;
-    customer.name = data.name;
 
     const dataReturn = await this.customerRepository.save(customer);
 
