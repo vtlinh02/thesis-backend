@@ -34,6 +34,15 @@ export class WalletService {
     return { data: dataReturn };
   }
 
+  async createWalletForValidateCustomer(customer: Customer) {
+    const wallet = new Wallet();
+    wallet.balance = 1000;
+    wallet.customer = customer;
+
+    const dataReturn = await this.walletRepository.save(wallet);
+    return { data: dataReturn };
+  }
+
   async getWalletBalance(customerId: number) {
     const customer = await this.customerRepository.findOneBy({
       id: customerId,

@@ -7,12 +7,14 @@ import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import 'dotenv/config';
 import { LoginDto } from './dto/login.dto';
+import { WalletService } from '../wallet/wallet.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(Customer)
     private customerRepository: Repository<Customer>,
+    private readonly walletService: WalletService,
   ) {}
 
   async signUp(data: SignUpDto) {
@@ -33,7 +35,14 @@ export class AuthService {
     customer.username = data.username;
     customer.hashedPassword = hashedPassword;
 
-    const token = jwt.sign({ username: data.username }, process.env.JWT_SECRET);
+    const dataReturn = await this.customerRepository.save(customer);
+
+    await this.walletService.createWalletForValidateCustomer(dataReturn);
+
+    const token = jwt.sign(
+      { id: dataReturn.id, username: data.username },
+      process.env.JWT_SECRET,
+    );
 
     return {
       data: {
@@ -60,7 +69,10 @@ export class AuthService {
       return new HttpException('Password is incorrect', HttpStatus.BAD_REQUEST);
     }
 
-    const token = jwt.sign({ username: data.username }, process.env.JWT_SECRET);
+    const token = jwt.sign(
+      { id: customer.id, username: data.username },
+      process.env.JWT_SECRET,
+    );
 
     return {
       data: {
