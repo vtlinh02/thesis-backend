@@ -23,7 +23,7 @@ export class AuthService {
     });
 
     if (customerExisted) {
-      return new HttpException(
+      throw new HttpException(
         'Username already exists',
         HttpStatus.BAD_REQUEST,
       );
@@ -57,7 +57,7 @@ export class AuthService {
     });
 
     if (!customer) {
-      return new HttpException('Username is incorrect', HttpStatus.BAD_REQUEST);
+      throw new HttpException('Username is incorrect', HttpStatus.BAD_REQUEST);
     }
 
     const isPasswordMatch = await bcrypt.compare(
@@ -66,7 +66,7 @@ export class AuthService {
     );
 
     if (!isPasswordMatch) {
-      return new HttpException('Password is incorrect', HttpStatus.BAD_REQUEST);
+      throw new HttpException('Password is incorrect', HttpStatus.BAD_REQUEST);
     }
 
     const token = jwt.sign(
@@ -88,7 +88,7 @@ export class AuthService {
         data: decoded,
       };
     } catch (error) {
-      return new HttpException('Token is invalid', HttpStatus.UNAUTHORIZED);
+      throw new HttpException('Token is invalid', HttpStatus.UNAUTHORIZED);
     }
   }
 }
