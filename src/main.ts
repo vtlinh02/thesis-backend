@@ -9,6 +9,7 @@ async function bootstrap() {
     .setTitle('Thesis')
     .setDescription('Thesis Backend API ')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);
