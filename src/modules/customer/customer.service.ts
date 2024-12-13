@@ -10,16 +10,4 @@ export class CustomerService {
     @InjectRepository(Customer)
     private readonly customerRepository: Repository<Customer>,
   ) {}
-
-  async createCustomer(data: CreateCustomerDto) {
-    const customer = new Customer();
-
-    customer.id = data.id;
-    customer.username = '';
-    customer.hashedPassword = '';
-
-    const dataReturn = await this.customerRepository.save(customer);
-
-    return { data: dataReturn };
-  }
 }

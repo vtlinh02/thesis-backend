@@ -99,6 +99,6 @@ export class AuthService {
     if (!customer) {
       throw new UnauthorizedException();
     }
-    return user;
+    return { data: user };
   }
 }
