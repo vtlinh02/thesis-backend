@@ -1,4 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Customer } from 'src/entities/Customer.entity';
 import { Repository } from 'typeorm';
@@ -8,6 +13,8 @@ import * as jwt from 'jsonwebtoken';
 import 'dotenv/config';
 import { LoginDto } from './dto/login.dto';
 import { WalletService } from '../wallet/wallet.service';
+import { Request } from 'express';
+import { AuthRequest } from 'src/shared/AuthRequest';
 
 @Injectable()
 export class AuthService {
@@ -81,14 +88,17 @@ export class AuthService {
     };
   }
 
-  async validateToken(token: string) {
-    try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      return {
-        data: decoded,
-      };
-    } catch (error) {
-      throw new HttpException('Token is invalid', HttpStatus.UNAUTHORIZED);
+  async validateToken(request: AuthRequest) {
+    const user = request.user;
+
+    const customer = await this.customerRepository.findOneBy({
+      id: user.id,
+      username: user.username,
+    });
+
+    if (!customer) {
+      throw new UnauthorizedException();
     }
+    return user;
   }
 }

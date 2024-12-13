@@ -24,6 +24,6 @@ export class AuthController {
   @ApiBearerAuth()
   @Get('/validate-token')
   async validateToken(@Req() request) {
-    return { data: request.user };
+    return this.authService.validateToken(request);
   }
 }
