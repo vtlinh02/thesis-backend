@@ -1,9 +1,18 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { WalletService } from './wallet.service';
 import { CreateWalletDto } from './dto/createWallet.dto';
 import { DepositWalletDto } from './dto/depositWallet.dto';
 import { WithDrawWalletDto } from './dto/withdrawWallet.dto';
+import { AuthGuard } from 'src/guards/auth.guard';
 
 @ApiTags('Wallet')
 @Controller('wallet')
@@ -15,6 +24,8 @@ export class WalletController {
     return this.walletService.createWallet(data);
   }
 
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @Get('/:customerId')
   async getWalletBalance(@Param('customerId') customerId: string) {
     return this.walletService.getWalletBalance(Number(customerId));
