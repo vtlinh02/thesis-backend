@@ -73,6 +73,7 @@ export class OrderService {
       order.customer = customer;
       order.product = product;
       order.quantity = data.quantity;
+      order.value = product.price * data.quantity;
       await this.orderRepository.save(order);
 
       await queryRunner.commitTransaction();
@@ -96,8 +97,13 @@ export class OrderService {
     const customer = await this.customerRepository.findOneBy({
       id: customerId,
     });
-
-    const orders = await this.orderRepository.findBy({ customer });
+    const orders = await this.orderRepository.find({
+      where: { customer },
+      relations: ['product'],
+      order: {
+        id: 'DESC',
+      },
+    });
 
     return { data: orders };
   }
