@@ -22,8 +22,11 @@ services:
       - 3307:3306
     networks:
       - thesis-network
+    volumes:
+      - thesis_mysql:/var/lib/mysql
 
   
 networks:
   thesis-network:
-    driver: bridge
+volumes:
+  thesis_mysql:
