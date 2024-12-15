@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  backend:
+    image: thesis-backend
+    container_name: thesis_backend
+    env_file:
+      - .env
+    depends_on:
+      - mysql
+    ports:
+      - 8001:8000
+    networks:
+      - thesis-network
+  mysql:
+    image: mysql:latest
+    container_name: thesis_mysql
+    env_file:
+      - .env.database
+    ports:
+      - 3307:3306
+    networks:
+      - thesis-network
+
+  
+networks:
+  thesis-network:
+    driver: bridge
