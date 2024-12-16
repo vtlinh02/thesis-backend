@@ -1,5 +1,14 @@
 version: "3.8"
 services:
+  frontend:
+    build:
+      context: ../thesis-frontend
+      dockerfile: Dockerfile
+    container_name: thesis_frontend
+    ports:
+      - 3001:3000
+    depends_on:
+      - backend
   backend:
     build:
       context: .
@@ -12,7 +21,7 @@ services:
     ports:
       - 8001:8000
     networks:
-      - thesis-network
+      - db-network
   mysql:
     image: mysql:latest
     container_name: thesis_mysql
@@ -21,12 +30,12 @@ services:
     ports:
       - 3307:3306
     networks:
-      - thesis-network
+      - db-network
     volumes:
       - thesis_mysql:/var/lib/mysql
 
   
 networks:
-  thesis-network:
+  db-network:
 volumes:
   thesis_mysql:
