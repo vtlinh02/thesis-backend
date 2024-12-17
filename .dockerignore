@@ -1,5 +1,6 @@
 node_modules
 dist
+load_test
 .env
 .env.database
 .env.container
