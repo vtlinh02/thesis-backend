@@ -26,6 +26,9 @@ import 'dotenv/config';
       database: process.env.MYSQL_DATABASE,
       entities: [Shop, Customer, Product, Order, Cart, Wallet],
       synchronize: true,
+      extra: {
+        connectionLimit: Number(process.env.MYSQL_MAX_POOLING_SIZE),
+      },
     }),
     AuthModule,
     ShopModule,
