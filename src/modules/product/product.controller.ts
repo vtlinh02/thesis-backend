@@ -21,8 +21,8 @@ export class ProductController {
     return this.productService.getListProducts(Number(shopId));
   }
 
-  @UseGuards(AuthGuard)
-  @ApiBearerAuth()
+  // @UseGuards(AuthGuard)
+  // @ApiBearerAuth()
   @Get('/:productId')
   async getProduct(@Param('productId') productId: string) {
     return this.productService.getProduct(Number(productId));
